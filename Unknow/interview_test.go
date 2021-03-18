@@ -64,3 +64,54 @@ func TestInterfaceDefine(t *testing.T) {
 //D. GoStub可以打动态桩，比如对一个函数打桩后，多次调用该函数会有不同的行为
 //
 //参考答案：ABD
+
+//56 [primary] 声明一个入参和返回值均为整型的函数变量f__________     //错：func f(x int)int{}，这个是f函数了，不是f变量函数
+//参考答案：var f func(a int) int
+
+//68 [intermediate] 下面的程序的运行结果是__________
+type Slice []int
+
+func NewSlice() Slice {
+	return make(Slice, 0)
+}
+func (s *Slice) Add(elem int) *Slice {
+	//fmt.Println(*s, elem)
+	*s = append(*s, elem)
+	fmt.Println(elem)
+	return s
+}
+func TestSlice(t *testing.T) {
+	s := NewSlice()
+	defer s.Add(1).Add(2)
+	//fmt.Println(s)
+	s.Add(3)
+}
+
+//参考答案：132     //不理解
+
+
+//76 [primary] Golang支持反射，反射最常见的使用场景是做对象的序列化（）  //不理解
+//参考答案：对的
+
+//77 [primary] Golang可以复用C/C++的模块，这个功能叫Cgo（）
+//参考答案：对
+
+//78 [primary] 下面代码中两个斜点之间的代码，比如json:"x"，作用是X字段在从结构体实例编码到JSON数据格式的时候，
+//使用x作为名字，这可以看作是一种重命名的方式（）
+//type Position struct {
+//	X int `json:"x"`
+//	Y int `json:"y"`
+//	Z int `json:"z"`
+//}
+//参考答案：对的， 输出的json{"x":1,"y":2,"z":3}
+
+type Position struct{
+	x int `json:"x"`,
+	y int `json:"y"`
+}
+
+func TestJson(t *testing.T){
+	p := Position{1,2}
+	fmt.Println(p)
+
+}
